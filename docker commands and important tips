@@ -117,7 +117,7 @@ hit enter, this command will execute each instruction in the Dockerfile one by o
 
 How to Push the Image to Docker Hub
 
-
+Docker Hub is a repository (or registry) where you can push your image as well as access other open source images.
 
 
 
