@@ -1,0 +1,142 @@
+
+
+aeit07@aeit07-Latitude-3420:/$ docker-compose --version
+docker-compose version 1.29.2, build unknown
+
+aeit07@aeit07-Latitude-3420:/$ docker --version
+Docker version 24.0.4, build 3713ee1
+
+docker run hello-world
+
+ the docker ps -a command to have a look at all the containers that are currently running or have run in the past:
+
+Docker Architecture and three very fundamental concepts of containerization in general, which are as follows:
+
+Container
+Image
+Registry
+
+
+Virtual machines are usually created and managed by a program known as a hypervisor
+Oracle VM VirtualBox
+VMware Workstation
+KVM
+Microsoft Hyper-V
+
+This hypervisor program usually sits between the host operating system and the virtual machines to act as a medium of communication
+
+FIREWALL SETTINGS
+
+UFW --> Uncomplicated Firewall on Ubuntu
+
+Docker uses a network bridge to manage the networking on your containers.
+By default, UFW drops all forwarded packets.
+Enable forwarding in UFW for Docker to function correctly.
+Editing the /etc/default/ufw file. 
+
+Old UFW forwarding policy  DEFAULT_FORWARD_POLICY="DROP"
+DEFAULT_FORWARD_POLICY="ACCEPT"
+Save the update and reload UFW  
+ sudo ufw reload  
+ 
+ docker commands
+ 
+ docker --version
+ 
+ sudo docker rmi $(sudo docker images -q)
+ 
+There are two command the first which execute in the $() is shell syntax and returns the results whatever executed in that syntax.
+So in this -q- is a option is used to provide to return the unique IDs,
+$() returns the results of image IDs and then docker rmi removes all those images.
+ 
+ 
+ 
+ sudo docker stop $(sudo docker ps -a -q) ---> Stop all running containers
+
+ sudo docker rm $(sudo docker ps -a -q) ----> Delete all stopped containers
+
+ $() ---> commands that run in this shell first to combine multiple commands  
+ 
+ docker ps -a -q
+ 
+ docker ps    ------> list containers
+ docker ps -a ------> the option to list all containers, even stopped ones. Without this, it defaults to only listing running containers
+ docker ps -a -q ---> the quiet option to provide only container numeric IDs, rather than a whole table of information about containers.
+ 
+ 
+ 
+ How to Write a Dockerfile
+
+A Docker image consists of different layers stacked on top of each other. 
+Each instruction in the Dockerfile adds a new layer on top of the existing ones. 
+Each layer in the image is stored as a SHA-256 hash.
+
+The syntax for specifying the image is <image>:<tag> where tag represents the version of the image.
+
+FROM node:18-alpine
+
+
+This instruction pushes the base image from a remote repository (in this case, the Docker Hub) 
+and defines the starting point for the image layers
+
+WORKDIR /react-docker-example/
+
+This command sets the working directory for any commands you add in the Dockerfile. So, while building the image, the commands will be executed in this directory.
+
+COPY public/ /react-docker-example/public
+COPY src/ /react-docker-example/src
+COPY package.json /react-docker-example/
+
+These instructions will copy the files we need into the working directory. 
+We only need the public and src folders (where your code resides), and the package.json file to run the application.
+
+RUN npm install
+
+The RUN instruction executes any command by adding a new layer on top of the current ones, thus modifying the image.
+This modified image will be used for the next steps.
+
+CMD ["npm", "start"]
+
+This instruction defines the command that will be executed when starting a container from the image.
+There can only be one CMD instruction in the Dockerfile.
+If there are more than one, then only the last one will be considered.
+
+
+How to Build the Image
+
+docker image build -t <image_name>:<tag> <path>
+
+-t option specifies the name and tag for the image.
+<path> represents the path in which you want to run the command.
+
+docker image build -t react-example-image:latest .
+
+The . at the end represents the current directory.
+
+hit enter, this command will execute each instruction in the Dockerfile one by one.
+
+How to Push the Image to Docker Hub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
